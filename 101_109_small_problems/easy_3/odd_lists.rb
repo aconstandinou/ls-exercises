@@ -1,7 +1,3 @@
-input - array
-out - array containing elements index 0-2-4, etc
-
-arrays, can use map since it will give us a new array with the proper reqs.
 
 def oddities(array)
   array.select.each_with_index { |val, idx| idx.even? }
