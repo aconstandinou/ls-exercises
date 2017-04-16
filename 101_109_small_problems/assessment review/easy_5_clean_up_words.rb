@@ -9,7 +9,7 @@ def cleanup(string)
       new_string << ' '
     end
   end
-  new_string.squeeze(' ')
+  new_string.squeeze!(' ')
 end
 
 # Test Case
