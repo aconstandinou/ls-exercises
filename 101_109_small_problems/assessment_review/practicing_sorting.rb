@@ -19,7 +19,7 @@ PRODUCTS = [
 ]
 
 PRODUCTS.each_index do |idx|
-  (idx+1..PRODUCTS.length).each do |sec_idx|
+  (idx+1..PRODUCTS.length-1).each do |sec_idx|
     if PRODUCTS[idx][:price] > PRODUCTS[sec_idx][:price]
       PRODUCTS[idx], PRODUCTS[sec_idx] = PRODUCTS[sec_idx], PRODUCTS[idx]
     end
