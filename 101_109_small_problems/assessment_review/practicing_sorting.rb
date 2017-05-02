@@ -57,3 +57,55 @@ rotate_rightmost_digits(735291, 3) == 735912
 rotate_rightmost_digits(735291, 4) == 732915
 rotate_rightmost_digits(735291, 5) == 752913
 rotate_rightmost_digits(735291, 6) == 352917
+
+
+
+KEY_HASH = {"B"=> "O", "X"=> "K", "D"=> "Q", "C"=> "P", "N"=> "A",
+            "G"=> "T", "R"=> "E", "F"=> "S", "J"=> "W", "H"=> "U",
+            "V"=> "I", "L"=> "Y", "Z"=> "M"}
+
+#iterate through string
+#check if string character is a key in KEY_HASH
+# if yes, check if the value of our key is also included in string
+#    if yes
+#      return false
+# else
+#  continue
+
+def block_word?(string)
+  new_string = string.upcase
+  string_array = new_string.split('')
+  string_array.each do |char|
+    if KEY_HASH[char]
+      if string_array.include?(KEY_HASH.fetch(char))
+        return false
+      end
+    end
+  end
+
+  return true
+end
+
+# Test Cases
+block_word?('BATCH') == true
+block_word?('BUTCH') == false
+block_word?('jest') == true
+
+
+require 'date'
+
+def friday_13th(year)
+  number_13_days = 0
+
+  (1..12).each do |mth|
+    if Date.new(year, mth, 13).friday?
+      number_13_days += 1
+    end
+  end
+
+  number_13_days
+end
+
+friday_13th(2015) == 3
+friday_13th(1986) == 1
+friday_13th(2019) == 2
