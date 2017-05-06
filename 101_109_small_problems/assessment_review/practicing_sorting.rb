@@ -157,3 +157,134 @@ new_list = reverse(list)              # => [3, 2, 1]
 list.object_id != new_list.object_id  # => true
 list == [1, 2, 3]                     # => true
 new_list == [3, 2, 1]                 # => true
+
+#input: string
+#iterate through each character and collect substrings
+#method return = array of all substrings
+
+def substrings_at_start(string)
+  string_array = string.split('')
+  substrings_array = []
+  string_array.each_index do |idx|
+    (idx..string_array.length-1).each do |sec_idx|
+      substrings_array << string_array[idx..sec_idx].join('')
+    end
+  end
+  substrings_array
+end
+
+#substrings_at_start('hello')
+p substrings_at_start('abc') == ['a', 'ab', 'abc']
+p substrings_at_start('a') == ['a']
+p substrings_at_start('xyzzy') == ['x', 'xy', 'xyz', 'xyzz', 'xyzzy']
+
+#############################################
+def all_substrings(string)
+  string_array = string.split('')
+
+  substrings_array = []
+
+  string_array.each_index do |idx|
+    (idx..string_array.length-1).each do |sec_idx|
+      substrings_array << string_array[idx..sec_idx].join('')
+    end
+  end
+
+  substrings_array
+end
+
+def palindromes(string)
+  all_substrings_arr = all_substrings(string)
+  all_substrings_arr.select! do |sub_string|
+    if sub_string.length > 1
+      sub_string == sub_string.reverse
+    end
+  end
+end
+
+palindromes('abcd') == []
+palindromes('madam') == ['madam', 'ada']
+palindromes('hello-madam-did-madam-goodbye') == [
+  'll', '-madam-', '-madam-did-madam-', 'madam', 'madam-did-madam', 'ada',
+  'adam-did-mada', 'dam-did-mad', 'am-did-ma', 'm-did-m', '-did-', 'did',
+  '-madam-', 'madam', 'ada', 'oo']
+palindromes('knitting cassettes') == [
+  'nittin', 'itti', 'tt', 'ss', 'settes', 'ette', 'tt']
+
+CONSONANTS = %w(b c d f g h j k l m n p q r s t v w x y z)
+
+def double_consonants(string)
+  array = []
+  string.each_char do |char|
+    if CONSONANTS.include?(char.downcase)
+      array << char * 2
+    else
+      array << char
+    end
+  end
+  array.join('')
+end
+
+double_consonants('String') == "SSttrrinngg"
+double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"
+double_consonants("July 4th") == "JJullyy 4tthh"
+double_consonants('') == ""
+
+
+def center_of(string)
+  string.length.odd? ? string[string.length/2] : string[string.length/2 -1..string.length/2]
+end
+
+center_of('I love ruby') == 'e'
+center_of('Launch School') == ' '
+center_of('Launch') == 'un'
+center_of('Launchschool') == 'hs'
+center_of('x') == 'x'
+
+NUMBERS_HASH = {'one'=> '1', 'two'=> '2', 'three'=> '3', 'four'=> '4',
+                'five'=> '5', 'six'=> '6', 'seven'=> '7', 'eight'=> '8',
+                'nine'=> '9', 'zero'=> '0'}
+
+def word_to_digit(string)
+  NUMBERS_HASH.keys.each do |word|
+    string.gsub!(/\b#{word}\b/, NUMBERS_HASH[word])
+  end
+  string
+end
+
+word_to_digit('Please call me at five five five one two three four. Thanks.') == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
+
+def fibonacci_recursion(n)
+  return 1 if n <= 2
+  fibonacci_recursion(n-1) + fibonacci_recursion(n-2)
+end
+
+fibonacci_recursion(1) == 1
+fibonacci_recursion(2) == 1
+fibonacci_recursion(3) == 2
+fibonacci_recursion(4) == 3
+fibonacci_recursion(5) == 5
+fibonacci_recursion(12) == 144
+fibonacci_recursion(20) == 6765
+
+def fibonacci(n)
+  array = [1, 1]
+  n.times do |_|
+    array << array[-2] + array[-1]
+  end
+  array[n-1]
+end
+fibonacci(20) == 6765
+fibonacci(100) == 354224848179261915075
+
+def fibonacci_last(num)
+  fib_num = fibonacci(num)
+  return fib_num.to_s[-1].to_i
+end
+
+fibonacci_last(15)        # -> 0  (the 15th Fibonacci number is 610)
+fibonacci_last(20)        # -> 5 (the 20th Fibonacci number is 6765)
+fibonacci_last(100)       # -> 5 (the 100th Fibonacci number is 354224848179261915075)
+fibonacci_last(100_001)   # -> 1 (this is a 20899 digit number)
+fibonacci_last(1_000_007) # -> 3 (this is a 208989 digit number)
+fibonacci_last(123456789) # -> 4
