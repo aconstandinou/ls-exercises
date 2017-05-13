@@ -31,6 +31,7 @@ query2 = {
 }
 
 def search(query)
+
   PRODUCTS.select do |h|
     (h[:price] >= query[:price_min]) && (h[:price] <= query[:price_max]) &&
     ((h[:name].downcase).include?query[:q])
