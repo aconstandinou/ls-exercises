@@ -6,7 +6,7 @@ class Cat
   end
 
   def to_s
-    "I'm #{name}!"
+    "I'm #{self.name}!"
   end
 end
 

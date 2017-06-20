@@ -6,7 +6,7 @@ class Person
   end
 
   def to_s
-    puts "#{secret}"
+    self.secret
   end
 end
 
