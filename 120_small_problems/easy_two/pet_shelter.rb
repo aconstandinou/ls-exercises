@@ -1,6 +1,8 @@
 require 'pry'
 
 class Pet
+  attr_reader :type, :name
+
   def initialize(pet_type, pet_name)
     @type = pet_type
     @name = pet_name
@@ -33,10 +35,25 @@ class Shelter
   end
 
   def print_adoptions
-    binding.pry
-    x = @adoptions.group_by{|h| h[:user]}.values
-    #@adoptions.join(' ')
+    name_array = []
+    @adoptions.each do |subhash|
+      name_array << subhash.keys
+    end
+    name_array.flatten!
+    name_array.uniq!
+    name_array.each do |person|
+      puts ''
+      puts "#{person} has adopted the following pets:"
+      @adoptions.each do |subhash|
+        subhash.each do |k, v|
+          if k == person
+            puts "a #{v.type} named #{v.name}"
+          end
+        end
+      end
+    end
   end
+
 end
 
 butterscotch = Pet.new('cat', 'Butterscotch')
