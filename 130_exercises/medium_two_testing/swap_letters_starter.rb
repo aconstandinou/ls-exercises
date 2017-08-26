@@ -25,3 +25,5 @@ class TextTest < Minitest::Test
     @file.close
   end
 end
+
+# NOTE: CAUSING AN ERROR HERE - TO FIX
