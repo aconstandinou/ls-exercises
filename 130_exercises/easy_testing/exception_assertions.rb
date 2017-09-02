@@ -2,4 +2,5 @@
 
 assert_raises(NoExperienceError) { employee.hire }
 
-# #assert_raises checks if the given block raises an exception of the named type. If it does not, the assertion fails.
+# #assert_raises checks if the given block raises an exception of the named type.
+# If it does not, the assertion fails.
