@@ -5,7 +5,6 @@ def gather(array)
 end
 
 gather(array) { |animals| raptors = animals[2..-1] }
-gather(array) { |animals| puts animals }
 
 # LS Answer
 birds = ['crow', 'finch', 'hawk', 'eagle', 'osprey']
