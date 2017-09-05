@@ -81,4 +81,3 @@ block_method_3 { return }
 #If we try to return from a Lambda, the same outcome occurs, regardless of
 #whether the Lambda is defined outside a method or inside of it. Eventually,
 #program execution will proceed to the next line after the #call to that lambda.
-#= end
