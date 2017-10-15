@@ -12,7 +12,7 @@ class Trinary
 
   def to_decimal
     arr_to_cover = trinary_string.split('')
-    return 0 if !arr_to_cover.grep(INVALID_CHARS).empty?
+    return 0 if invalid_chars_checker
     arr_to_cover = arr_to_cover.map(&:to_i)
     trinary = 0
     count = arr_to_cover.size - 1
@@ -22,4 +22,12 @@ class Trinary
     end
     trinary
   end
+
+  private
+
+  def invalid_chars_checker
+    arr_to_cover = trinary_string.split('')
+    !arr_to_cover.grep(INVALID_CHARS).empty?
+  end
+
 end
