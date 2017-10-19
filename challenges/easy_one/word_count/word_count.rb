@@ -3,7 +3,7 @@ class Phrase
   attr_reader :sentence
 
   def initialize(words)
-    @sentence = words.downcase.gsub(/[^a-z'0-9]/, ' ').gsub(/^'|'$/, '').split(' ')
+    @sentence = words.downcase.scan(/[a-zA-Z]+'?[a-z]+|\d+/)
   end
 
   def word_count
