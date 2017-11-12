@@ -16,23 +16,11 @@ class PigLatin
     pig_latin_arr = []
 
     string_arr.each do |word|
-      if VOWELS.include?(word[0])
+      if begins_with_vowel_sound?(word)
         pig_latin_arr << word + 'ay'
-      elsif word[0] == 'y'
-        if VOWELS.include?(word[1])
-          pig_latin_arr << word[1..-1] + 'yay'
-        else
-          pig_latin_arr << word + 'ay'
-        end
       elsif word.include?('qu')
         index_at = word.index('u') + 1
         pig_latin_arr << word[index_at..-1] + word[0..index_at-1] + 'ay'
-      elsif word[0] == 'x'
-        if VOWELS.include?(word[1])
-          pig_latin_arr << word[1..-1] + 'xay'
-        else
-          pig_latin_arr << word + 'ay'
-        end
       else
         first_letters = ''
         idx = 0
@@ -54,4 +42,7 @@ class PigLatin
     pig_latin_arr.join(' ')
   end
 
+  def self.begins_with_vowel_sound?(word)
+    word.match(/\A[aeiou]|[xy][^aeiou]/)
+  end
 end
