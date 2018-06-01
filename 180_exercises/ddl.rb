@@ -80,14 +80,82 @@ ALTER TABLE stars ADD CONSTRAINT spectral_type_check CHECK (
 
 # Problem 6
 
+'We start out by first dropping the CHECK constraint from the table. To do this,
+  we need to know the constraint name, which can be found by displaying the schema for the table'
+ALTER TABLE stars DROP CONSTRAINT spectral_type_check;
+
+'Next, we need to create an enumerated type, which we will call spectral_type_enum;
+  the type is restricted to the values in the list in the AS ENUM clause'
+CREATE TYPE spectral_type_enum AS ENUM ('O', 'B', 'A', 'F', 'G', 'K', 'M');
+
+'Finally, we change the type of the spectral_type column to spectral_type_enum.'
+
+ALTER TABLE stars
+ALTER COLUMN spectral_type TYPE spectral_type_enum
+                           USING spectral_type::spectral_type_enum;
+
+# Problem 7
+
+table: planets
+column: mass
+
+Modify the mass column in the planets table so that it allows fractional
+  masses to any degree of precision required. In addition, make sure
+  the mass is required and positive.
+
+ALTER TABLE planets
+ALTER COLUMN mass TYPE numeric,
+ALTER COLUMN mass SET NOT NULL,
+ADD CHECK (mass > 0),
+ALTER COLUMN designation SET NOT NULL;
+
+'Note in particular that the addition of a CHECK constraint is a table-level
+  operation: we add the CHECK to the table rather than the mass column.'
+
+# Problem 8
+table: planets
+new column: semi_major_axis
+type: numeric NOT NULL
+
+calculation = average distance from planets star in astronomical units (1 AU is avg distance of earth from Sun)
+
+ALTER TABLE planets ADD COLUMN semi_major_axis numeric NOT NULL;
+
+# Problem 8 - Further Exploration
+(assume planets table already contains one or more rows of data)
+
+What will happen when you try to run the above command?
+  'it causes an error since there are NULL VALUES when we add the command'
+What will you need to do differently to obtain the desired result?
+'add default value'
+
+ALTER TABLE planets ADD COLUMN semi_major_axis numeric NOT NULL DEFAULT 0;
+
+UPDATE planets SET semi_major_axis=0.04 WHERE id=3;
+UPDATE planets SET semi_major_axis=40 WHERE id=4;
+
+# Problem 9
+
+new table moon
+
+CREATE TABLE moon (
+  id serial PRIMARY KEY,
+  designation integer NOT NULL CHECK (designation > 0),
+  semi_major_axis numeric CHECK (semi_major_axis > 0.0),
+  mass numeric CHECK (semi_major_axis > 0.0),
+  planet_id integer NOT NULL REFERENCES planets(id)
+);
 
 
+# Problem 10
 
+delete database using psql console
 
+\c sql_course
+DROP DATABASE extrasolar;
 
+'note: that DROP DATABASE is extremely destructive: there is no confirmation
+  prompt, and no backups are made of the database. Use this statement with extreme care.'
 
-
-
-
-
-.
+'to create a backup of DB'
+$ pg_dump --inserts extrasolar > extrasolar.dump.sql
