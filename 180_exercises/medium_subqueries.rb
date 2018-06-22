@@ -51,7 +51,29 @@ SELECT DISTINCT(name) FROM bidders
 
 # PROBLEM 5
 
+SELECT name AS "Highest Bid Less Than 100 Dollars" FROM items
+WHERE 100.00 > ANY
+  (SELECT amount FROM bids WHERE item_id = items.id);
+
+SELECT name AS "Highest Bid Less Than 100 Dollars" FROM items
+WHERE 100.00 > ALL
+  (SELECT amount FROM bids WHERE item_id = items.id);
+
 # PROBLEM 6
+# this works but isnt the answer they are looking for
+SELECT COUNT(item_id) AS max FROM bids
+ GROUP BY item_id
+ ORDER BY max DESC LIMIT 1;
+# my version
+SELECT max FROM
+ (SELECT COUNT(item_id) AS count FROM bids
+  GROUP BY item_id
+  ORDER BY count DESC LIMIT 1) AS max;
+# LS version
+#   We can use a subquery within the FROM clause to generate a table, then
+#   use the outer SELECT to query data from that table.
+SELECT MAX(bid_counts.count) FROM
+  (SELECT COUNT(bidder_id) FROM bids GROUP BY bidder_id) AS bid_counts;
 
 # PROBLEM 7
 
